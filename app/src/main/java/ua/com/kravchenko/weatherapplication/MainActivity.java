@@ -1,10 +1,14 @@
 package ua.com.kravchenko.weatherapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
@@ -37,7 +42,14 @@ public class MainActivity extends AppCompatActivity {
     TextView location;
     TextView updateTime;
 
-    private final String CITY = "Khmelnytskyi";
+    private String locationProvider = LocationManager.GPS_PROVIDER;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
+    final long UPDATE_TIME = 5000;
+    final float UPDATE_DISTANCE = 1000;
+    final int REQUEST_CODE = 101;
+
     private final String API_KEY = "40f292c233e75229c5b82b736ad75d81";
     private final String UNITS = "metric";
     private final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
@@ -57,17 +69,67 @@ public class MainActivity extends AppCompatActivity {
         humidity = findViewById(R.id.tv_humidity);
         location = findViewById(R.id.tv_location);
         updateTime = findViewById(R.id.tv_update_tracker);
-
-        connectToOpenWeather();
     }
 
-    private void connectToOpenWeather(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCurrentLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (locationManager != null) {
+            locationManager.removeUpdates(locationListener);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this,
+                        "Location acquired",
+                        Toast.LENGTH_SHORT).show();
+                getCurrentLocation();
+            }
+        }
+    }
+
+    private void getCurrentLocation() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = location -> {
+            String latitude = String.valueOf(location.getLatitude());
+            String longitude = String.valueOf(location.getLongitude());
+
+            RequestParams params = new RequestParams();
+            params.put("lat", latitude);
+            params.put("lon", longitude);
+            params.put("appid", API_KEY);
+            params.put("units", UNITS);
+            connectToOpenWeather(params);
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE);
+            return;
+        }
+
+        locationManager.requestLocationUpdates(locationProvider, UPDATE_TIME, UPDATE_DISTANCE, locationListener);
+    }
+
+    private void connectToOpenWeather(RequestParams params) {
+
         AsyncHttpClient client = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
-        params.put("q", CITY);
-        params.put("appid", API_KEY);
-        params.put("units", UNITS);
-        client.get(WEATHER_URL, params, new JsonHttpResponseHandler(){
+        client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -92,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // TODO UpdateUI realization
-    private void updateUI(WeatherData weatherData){
+    private void updateUI(WeatherData weatherData) {
         findViewById(R.id.pb_progress_bar).setVisibility(View.GONE);
         findViewById(R.id.rl_main_container).setVisibility(View.VISIBLE);
+
         Format time = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
         Format date = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH);
         int resourceID = getResources().getIdentifier(weatherData.getIcon(), "drawable", getPackageName());
@@ -109,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         humidity.setText(weatherData.getHumidity());
         wind.setText(weatherData.getWind());
         location.setText(weatherData.getLocation());
-        updateTime.setText(date.format(weatherData.getUpdateTime()));
+        updateTime.setText(date.format(new Date()));
         weather.setImageResource(resourceID);
     }
 }

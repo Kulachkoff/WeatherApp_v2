@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">WeatherApplication</string>
+    <string name="location">- - - - - - -</string>
+    <string name="updated_at">\??/??/???? ??:??</string>
+    <string name="weather_icon">weather_icon</string>
+    <string name="min_temp">\??°C</string>
+    <string name="max_temp">\??°C</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunrise_time">\??:??</string>
+    <string name="sunset">Sunset</string>
+    <string name="sunset_time">\??:??</string>
+    <string name="wind">Wind</string>
+    <string name="wind_speed">\??</string>
+    <string name="pressure">Pressure</string>
+    <string name="pressure_value">\????</string>
+    <string name="humidity">Humidity</string>
+    <string name="humidity_value">\??%</string>
+    <string name="made_by">Made by</string>
+    <string name="kulachkoff">Kulachkoff</string>
+    <string name="temp">\??°C</string>
 </resources>

@@ -10,7 +10,6 @@ import java.util.Locale;
 
 public class WeatherData {
 
-    private String mWeather;
     private Date mSunrise;
     private Date mSunset;
     private String mTemperature;
@@ -20,7 +19,6 @@ public class WeatherData {
     private String mPressure;
     private String mHumidity;
     private String mLocation;
-    private Date mUpdateTime;
     private String mWeatherIcon;
 
     public static WeatherData parseWeatherData(JSONObject jsonObject) {
@@ -36,10 +34,7 @@ public class WeatherData {
             int tempMax = main.getInt("temp_max");
             long sunrise = sys.getLong("sunrise") * 1000 + 7200000;
             long sunset = sys.getLong("sunset") * 1000 + 7200000;
-            long date = jsonObject.getLong("dt") * 1000 + 7200000;
 
-
-            weatherData.mWeather = weather.getString("description");
             weatherData.mSunrise = new Date(sunrise);
             weatherData.mSunset = new Date(sunset);
             weatherData.mTemperature = temp + "°C";
@@ -49,7 +44,6 @@ public class WeatherData {
             weatherData.mHumidity = main.getString("humidity") + "%";
             weatherData.mWind = wind.getString("speed");
             weatherData.mLocation = jsonObject.getString("name") + ", " + sys.getString("country");
-            weatherData.mUpdateTime = new Date(date);
             weatherData.mWeatherIcon = updateWeatherIcon(weather.getInt("id"));
 
         } catch (JSONException e) {
@@ -92,8 +86,6 @@ public class WeatherData {
     public String getHumidity() { return mHumidity; }
 
     public String getLocation() { return mLocation; }
-
-    public Date getUpdateTime() { return mUpdateTime; }
 
     public String getIcon() { return mWeatherIcon; }
 

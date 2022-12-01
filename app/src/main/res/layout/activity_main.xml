@@ -28,13 +28,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
-                android:text="Location"/>
+                android:text="@string/location"/>
             <TextView
                 android:id="@+id/tv_update_tracker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:text="Updated at"/>
+                android:text="@string/updated_at"/>
 
         </LinearLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:contentDescription="weather_icon"
+                android:contentDescription="@string/weather_icon"
                 android:src="@drawable/drizzle"
                 app:tint="#FFFFFF" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
-                android:text="24°C"
+                android:text="@string/temp"
                 android:textSize="90sp" />
 
             <LinearLayout
@@ -85,7 +85,7 @@
                     android:id="@+id/tv_min_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Min temp" />
+                    android:text="@string/min_temp" />
 
                 <Space
                     android:layout_width="50dp"
@@ -95,7 +95,7 @@
                     android:id="@+id/tv_max_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Max temp" />
+                    android:text="@string/max_temp" />
 
             </LinearLayout>
 
@@ -136,14 +136,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Sunrise"/>
+                        android:text="@string/sunrise"/>
 
                     <TextView
                         android:id="@+id/tv_sunrise"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="5:30am"/>
+                        android:text="@string/sunrise_time"/>
 
                 </LinearLayout>
 
@@ -172,14 +172,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Sunset"/>
+                        android:text="@string/sunset"/>
 
                     <TextView
                         android:id="@+id/tv_sunset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="5:30am"/>
+                        android:text="@string/sunset_time"/>
 
                 </LinearLayout>
 
@@ -208,14 +208,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Wind"/>
+                        android:text="@string/wind"/>
 
                     <TextView
                         android:id="@+id/tv_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="5:30am"/>
+                        android:text="@string/wind_speed"/>
 
                 </LinearLayout>
 
@@ -255,14 +255,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Pressure"/>
+                        android:text="@string/pressure"/>
 
                     <TextView
                         android:id="@+id/tv_pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="5:30am"/>
+                        android:text="@string/pressure_value"/>
 
                 </LinearLayout>
 
@@ -291,14 +291,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Humidity"/>
+                        android:text="@string/humidity"/>
 
                     <TextView
                         android:id="@+id/tv_humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="5:30am"/>
+                        android:text="@string/humidity_value"/>
 
                 </LinearLayout>
 
@@ -327,14 +327,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
-                        android:text="Made by"/>
+                        android:text="@string/made_by"/>
 
                     <TextView
                         android:id="@+id/tv_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
-                        android:text="Kulachkoff"/>
+                        android:text="@string/kulachkoff"/>
 
                 </LinearLayout>
 
